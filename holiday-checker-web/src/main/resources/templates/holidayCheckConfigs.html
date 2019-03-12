@@ -9,8 +9,8 @@
         <h1>Holiday Check Configs</h1>
         <div th:each="holidayCheckConfig : ${holidayCheckConfigs}">
             <form action="/admin/updateHolidayCheckConfig" method="post">
-                    <input type="hidden" size="20" name="key" th:value="${holidayCheckConfig.key}"/>
-                    <input type="text" size="50" name="value" th:value="${holidayCheckConfig.value}"/>
+                <input type="hidden" size="20" name="key" th:value="${holidayCheckConfig.key}"/>
+                <input type="text" size="50" name="value" th:value="${holidayCheckConfig.value}"/>
                 <input type="submit" value="Change value"/>
             </form>
         </div>

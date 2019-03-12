@@ -17,7 +17,7 @@ public class HolidayCheckExceptionHandler {
     @ExceptionHandler(HolidayCheckValidationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public List<String> handleIllegalArgumentException(HolidayCheckValidationException exception) {
+    public List<String> handleHolidayCheckValidationException(HolidayCheckValidationException exception) {
         return exception.getMessages();
     }
 

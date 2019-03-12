@@ -19,16 +19,16 @@ public class HolidayApiResponseErrorHandler implements ResponseErrorHandler {
     }
 
     public void handleError(ClientHttpResponse clientHttpResponse) throws IOException {
-        HttpStatus statusCode = clientHttpResponse.getStatusCode();
-        String message;
+        int statusCode = clientHttpResponse.getStatusCode().value();
+        String errorMessage;
 
         try (InputStream inputStream = clientHttpResponse.getBody();
              InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
              BufferedReader bufferedReader = new BufferedReader(inputStreamReader)) {
 
-            message = bufferedReader.lines().collect(Collectors.joining(System.lineSeparator()));
+             errorMessage = bufferedReader.lines().collect(Collectors.joining(System.lineSeparator()));
         }
 
-        throw new HolidayCheckException(statusCode.value(), message);
+        throw new HolidayCheckException(statusCode, errorMessage);
     }
 }
