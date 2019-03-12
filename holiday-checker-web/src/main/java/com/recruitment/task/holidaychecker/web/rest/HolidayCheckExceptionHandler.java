@@ -4,6 +4,7 @@ import com.recruitment.task.holidaychecker.service.exception.HolidayCheckExcepti
 import com.recruitment.task.holidaychecker.service.validation.exception.HolidayCheckValidationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,6 +24,13 @@ public class HolidayCheckExceptionHandler {
 
     @ExceptionHandler(HolidayCheckException.class)
     public ResponseEntity<String> handleHolidayCheckException(HolidayCheckException exception) {
-        return new ResponseEntity<>(exception.getMessage(), HttpStatus.valueOf(exception.getErrorCode()));
+        HttpStatus status = HttpStatus.valueOf(exception.getErrorCode());
+        String message = exception.getMessage();
+
+        if (StringUtils.isEmpty(message)) {
+            message = status.getReasonPhrase();
+        }
+
+        return new ResponseEntity<>(message, status);
     }
 }
