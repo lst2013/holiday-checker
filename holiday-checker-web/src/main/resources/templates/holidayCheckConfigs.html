@@ -5,11 +5,16 @@
         <meta charset="UTF-8">
         <title>Holiday Check Configs</title>
     </head>
+
     <body>
         <h1>Holiday Check Configs</h1>
+
+        <p th:if="${message != null}" th:text="${message}"></p>
+
         <div th:each="holidayCheckConfig : ${holidayCheckConfigs}">
             <form action="/admin/updateHolidayCheckConfig" method="post">
                 <input type="hidden" size="20" name="key" th:value="${holidayCheckConfig.key}"/>
+                <label th:text="${holidayCheckConfig.key}"></label>
                 <input type="text" size="50" name="value" th:value="${holidayCheckConfig.value}"/>
                 <input type="submit" value="Change value"/>
             </form>

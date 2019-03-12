@@ -6,10 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 @RequestMapping("/admin")
@@ -24,31 +27,24 @@ public class HolidayCheckAdminController {
     private HolidayCheckConfigRepository holidayCheckConfigRepository;
 
     @RequestMapping(value = "/allHolidayCheckConfigs", method = RequestMethod.GET)
-    public ModelAndView getAllHolidayCheckConfigs() {
-        ModelAndView modelAndView = createModelAndView();
+    public ModelAndView getAllHolidayCheckConfigs(@ModelAttribute String message) {
+        ModelAndView modelAndView = new ModelAndView(HOLIDAY_CHECK_CONFIGS);
         modelAndView.addObject(HOLIDAY_CHECK_CONFIGS, holidayCheckConfigRepository.getAllHolidayCheckConfigs());
 
-        return modelAndView;
-    }
-
-    @RequestMapping(value = "/updateHolidayCheckConfig", method = RequestMethod.POST)
-    public ModelAndView updateHolidayCheckConfig(@RequestParam String key, @RequestParam String value) {
-        ModelAndView modelAndView = createModelAndView();
-
-        String holidayCheckConfigValue = holidayCheckConfigRepository.getHolidayCheckConfigValueByKey(key);
-
-        if (!StringUtils.isEmpty(holidayCheckConfigValue)) {
-            holidayCheckConfigRepository.updateHolidayCheckConfig(createHolidayCheckConfig(key, value));
-            modelAndView.addObject(MESSAGE, "Config updated");
-        } else {
-            modelAndView.addObject(MESSAGE, "Config key '" + key + "' does not exist");
+        if (!StringUtils.isEmpty(message)) {
+            modelAndView.addObject(MESSAGE, message);
         }
 
         return modelAndView;
     }
 
-    private ModelAndView createModelAndView() {
-        return new ModelAndView(HOLIDAY_CHECK_CONFIGS);
+    @RequestMapping(value = "/updateHolidayCheckConfig", method = RequestMethod.POST)
+    public RedirectView updateHolidayCheckConfig(@RequestParam String key, @RequestParam String value, RedirectAttributes redirectAttributes) {
+        holidayCheckConfigRepository.updateHolidayCheckConfig(createHolidayCheckConfig(key, value));
+
+        redirectAttributes.addFlashAttribute(MESSAGE, generateMessage(key, value));
+
+        return new RedirectView("/admin/allHolidayCheckConfigs");
     }
 
     private HolidayCheckConfig createHolidayCheckConfig(String key, String value) {
@@ -57,5 +53,9 @@ public class HolidayCheckAdminController {
         holidayCheckConfig.setValue(value);
 
         return holidayCheckConfig;
+    }
+
+    private String generateMessage(String key, String value) {
+        return "Key '" + key + "' successfully updated with '" + value + "' value";
     }
 }
