@@ -1,5 +1,6 @@
 package com.recruitment.task.holidaychecker.web;
 
+import com.recruitment.task.holidaychecker.service.util.rest.HolidayApiResponseErrorHandler;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -18,6 +19,9 @@ public class HolidayCheckerApplication {
 
 	@Bean
 	public RestTemplate restTemplate() {
-		return new RestTemplate();
+		RestTemplate restTemplate = new RestTemplate();
+		restTemplate.setErrorHandler(new HolidayApiResponseErrorHandler());
+
+		return restTemplate;
 	}
 }
