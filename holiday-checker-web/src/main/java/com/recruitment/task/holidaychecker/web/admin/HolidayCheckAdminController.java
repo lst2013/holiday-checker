@@ -13,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/admin")
-@Secured("admin")
+@Secured("ROLE_ADMIN")
 public class HolidayCheckAdminController {
 
     private static final String HOLIDAY_CHECK_CONFIGS = "holidayCheckConfigs";
