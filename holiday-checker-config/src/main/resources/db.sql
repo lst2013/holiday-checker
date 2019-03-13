@@ -1,7 +1,3 @@
-CREATE DATABASE holiday_check;
-
-USE holiday_check;
-
 CREATE TABLE IF NOT EXISTS holiday_check_config (
   id INT AUTO_INCREMENT,
   config_key VARCHAR(20) NOT NULL,
