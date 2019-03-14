@@ -1,0 +1,43 @@
+version: '3.7'
+
+services:
+
+    hc-db:
+    
+        image: lst2019/holiday-checker:holiday-checker-db-mysql
+        
+        build:
+        
+            context: ./holiday-checker-config/
+        
+            dockerfile: Dockerfile
+            
+        ports: 
+        
+        - 3306:3306
+        
+        volumes: 
+        
+        - /data/db-mysql
+        
+    hc-app:
+    
+        image: lst2019/holiday-checker:holiday-checker-app
+        
+        build:
+        
+            context: ./holiday-checker-web/
+        
+            dockerfile: Dockerfile
+            
+        depends_on: 
+        
+        - hc-db
+        
+        ports: 
+        
+        - 8080:8080
+        
+        volumes: 
+        
+        - /data/app
