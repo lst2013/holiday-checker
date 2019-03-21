@@ -26,12 +26,12 @@ public class HolidayApiUriBuilder {
         LocalDate date = holidayCheckRequest.getDate();
 
         UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url)
-                                        .queryParam("key", key)
-                                        .queryParam("country", country.getLanguage())
-                                        .queryParam("year", date.getYear())
-                                        .queryParam("month", date.getMonthValue())
-                                        .queryParam("day", date.getDayOfMonth())
-                                        .build();
+                                                          .queryParam("key", key)
+                                                          .queryParam("country", country.getLanguage())
+                                                          .queryParam("year", date.getYear())
+                                                          .queryParam("month", date.getMonthValue())
+                                                          .queryParam("day", date.getDayOfMonth())
+                                                          .build();
 
         return uriComponents.toUri();
     }

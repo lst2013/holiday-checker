@@ -8,6 +8,8 @@ import com.recruitment.task.holidaychecker.rest.client.HolidayApiRestClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class HolidayCheckService {
 
@@ -33,19 +35,17 @@ public class HolidayCheckService {
     }
 
     private HolidayCheckResponse getHolidayCheckResponse(HolidayApiResponse responseForFirstCountry, HolidayApiResponse responseForSecondCountry) {
-        for (HolidayApiResult resultForFirstCountry : responseForFirstCountry.getResults()) {
-            for (HolidayApiResult resultForSecondCountry : responseForSecondCountry.getResults()) {
-                if (resultsMatch(resultForFirstCountry, resultForSecondCountry)) {
-                    return createHolidayCheckResponseFromResults(resultForFirstCountry, resultForSecondCountry);
-                }
-            }
+        List<HolidayApiResult> resultsForFirstCountry = responseForFirstCountry.getResults();
+        List<HolidayApiResult> resultsForSecondCountry = responseForSecondCountry.getResults();
+
+        resultsForFirstCountry.retainAll(resultsForSecondCountry);
+        resultsForSecondCountry.retainAll(resultsForFirstCountry);
+
+        if (resultsForFirstCountry.isEmpty() || resultsForSecondCountry.isEmpty()) {
+            return EMPTY_HOLIDAY_CHECK_RESPONSE;
         }
 
-        return EMPTY_HOLIDAY_CHECK_RESPONSE;
-    }
-
-    private boolean resultsMatch(HolidayApiResult resultForFirstCountry, HolidayApiResult resultForSecondCountry) {
-        return resultForFirstCountry.getDate().isEqual(resultForSecondCountry.getDate());
+        return createHolidayCheckResponseFromResults(resultsForFirstCountry.get(0), resultsForSecondCountry.get(0));
     }
 
     private HolidayCheckResponse createHolidayCheckResponseFromResults(HolidayApiResult resultForFirstCountry, HolidayApiResult resultForSecondCountry) {
