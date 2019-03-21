@@ -17,13 +17,13 @@ public class HolidayCheckService {
     private HolidayApiRestClient holidayApiRestClient;
 
     public HolidayCheckResponse checkHoliday(HolidayCheckRequest holidayCheckRequest) {
-        HolidayApiResponse responseForFirstCountry = holidayApiRestClient.getHolidayApiResponse(holidayCheckRequest, () -> holidayCheckRequest.getFirstCountry());
+        HolidayApiResponse responseForFirstCountry = holidayApiRestClient.getHolidayApiResponse(holidayCheckRequest, holidayCheckRequest::getFirstCountry);
 
         if (responseForFirstCountry.isEmpty()) {
             return EMPTY_HOLIDAY_CHECK_RESPONSE;
         }
 
-        HolidayApiResponse responseForSecondCountry = holidayApiRestClient.getHolidayApiResponse(holidayCheckRequest, () -> holidayCheckRequest.getSecondCountry());
+        HolidayApiResponse responseForSecondCountry = holidayApiRestClient.getHolidayApiResponse(holidayCheckRequest, holidayCheckRequest::getSecondCountry);
 
         if (responseForSecondCountry.isEmpty()) {
             return EMPTY_HOLIDAY_CHECK_RESPONSE;
