@@ -17,9 +17,11 @@
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>holiday-checker-web</module>
+        <module>holiday-checker-model</module>
 		<module>holiday-checker-config</module>
 		<module>holiday-checker-service</module>
-	</modules>
+        <module>holiday-checker-rest-client</module>
+		<module>holiday-checker-web</module>
+    </modules>
 
 </project>

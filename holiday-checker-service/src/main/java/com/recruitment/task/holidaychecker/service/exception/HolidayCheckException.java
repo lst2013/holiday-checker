@@ -1,16 +1,18 @@
 package com.recruitment.task.holidaychecker.service.exception;
 
+import java.util.List;
+
 public class HolidayCheckException extends RuntimeException {
 
-    private int errorCode;
+    private List<String> messages;
 
-    public HolidayCheckException(int errorCode, String message) {
-        super(message);
+    public HolidayCheckException(List<String> messages) {
+        super();
 
-        this.errorCode = errorCode;
+        this.messages = messages;
     }
 
-    public int getErrorCode() {
-        return errorCode;
+    public List<String> getMessages() {
+        return messages;
     }
 }

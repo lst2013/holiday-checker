@@ -1,6 +1,6 @@
 package com.recruitment.task.holidaychecker.web;
 
-import com.recruitment.task.holidaychecker.service.util.rest.HolidayApiResponseErrorHandler;
+import com.recruitment.task.holidaychecker.rest.client.errorhandler.HolidayApiResponseErrorHandler;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;

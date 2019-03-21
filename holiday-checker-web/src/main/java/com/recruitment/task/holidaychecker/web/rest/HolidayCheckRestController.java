@@ -1,10 +1,10 @@
 package com.recruitment.task.holidaychecker.web.rest;
 
-import com.recruitment.task.holidaychecker.service.impl.HolidayCheckService;
-import com.recruitment.task.holidaychecker.service.model.HolidayCheckRequest;
-import com.recruitment.task.holidaychecker.service.model.HolidayCheckResponse;
-import com.recruitment.task.holidaychecker.service.validation.exception.HolidayCheckValidationException;
-import com.recruitment.task.holidaychecker.service.validation.group.Sequence;
+import com.recruitment.task.holidaychecker.model.HolidayCheckRequest;
+import com.recruitment.task.holidaychecker.model.HolidayCheckResponse;
+import com.recruitment.task.holidaychecker.service.exception.HolidayCheckException;
+import com.recruitment.task.holidaychecker.model.validation.group.Sequence;
+import com.recruitment.task.holidaychecker.service.HolidayCheckService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
@@ -27,7 +27,7 @@ public class HolidayCheckRestController {
     public HolidayCheckResponse checkHoliday(@RequestBody @Validated(Sequence.class) HolidayCheckRequest holidayCheckRequest, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             List<String> messages = bindingResult.getAllErrors().stream().map(ObjectError::getDefaultMessage).collect(Collectors.toList());
-            throw new HolidayCheckValidationException(messages);
+            throw new HolidayCheckException(messages);
         }
 
         return holidayCheckService.checkHoliday(holidayCheckRequest);
