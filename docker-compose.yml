@@ -4,7 +4,7 @@ services:
 
     hc-db:
     
-        image: lst2019/holiday-checker:holiday-checker-db-mysql
+        image: holiday-checker-db-mysql
         
         build:
         
@@ -22,7 +22,7 @@ services:
         
     hc-app:
     
-        image: lst2019/holiday-checker:holiday-checker-app
+        image: holiday-checker-app
         
         build:
         
