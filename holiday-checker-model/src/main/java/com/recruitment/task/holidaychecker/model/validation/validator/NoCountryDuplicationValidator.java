@@ -9,10 +9,6 @@ import java.util.Locale;
 
 public class NoCountryDuplicationValidator implements ConstraintValidator<NoCountryDuplication, NoCountryDuplicationModel> {
 
-    public void initialize(NoCountryDuplication constraintAnnotation) {
-
-    }
-
     public boolean isValid(NoCountryDuplicationModel noCountryDuplicationModel, ConstraintValidatorContext constraintValidatorContext) {
         Locale firstCountry = noCountryDuplicationModel.getFirstCountry();
         Locale secondCountry = noCountryDuplicationModel.getSecondCountry();

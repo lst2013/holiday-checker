@@ -1,5 +1,5 @@
 package com.recruitment.task.holidaychecker.model.validation.group;
 
-public interface Second {
+public interface DuplicationCheck {
 
 }
